@@ -3,6 +3,7 @@
 namespace :uc:vendor\:uc:package;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class :uc:packageServiceProvider extends ServiceProvider
 {
@@ -13,11 +14,28 @@ class :uc:packageServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', ':lc:vendor');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', ':lc:vendor');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
-
+		    
+//		    Blade::componentNamespace("CreaUdemy\\Components");
+		    // Blades with classes
+//		    Blade::component(ButtonComponent::class, $packageName.'::button-component');
+//		    Blade::component(Master::class, $packageName.'::master');
+//		    Blade::component(ModalComponent::class, $packageName.'::modal-component');
+				
+         $this->loadTranslationsFrom(__DIR__.'/lang', ':lc:package');
+         $this->loadViewsFrom(__DIR__.'/views', ':lc:package');
+         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+		
+		Factory::guessFactoryNamesUsing(function ($modelName) {
+				// Ensure only package models use this resolution
+				if (str_starts_with($modelName, ':uc:vendor\\:uc:package\\Models\\')) {
+						return ':uc:vendor\\:uc:package\\database\\factories\\' . class_basename($modelName) . 'Factory';
+				}
+				
+				// Default behavior for non-package models
+				return 'Database\\Factories\\' . class_basename($modelName) . 'Factory';
+		});
+		Paginator::useBootstrapFive();
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
@@ -32,7 +50,9 @@ class :uc:packageServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/:lc:package.php', ':lc:package');
-
+		    
+//		    ServiceProvider::addProviderToBootstrapFile(UserDataService::class);
+//		    ServiceProvider::addProviderToBootstrapFile(ComposerServiceProvider::class);
         // Register the service the package provides.
         $this->app->singleton(':lc:package', function ($app) {
             return new :uc:package;
