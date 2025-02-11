@@ -1,0 +1,35 @@
+preset: package
+
+namespace: :uc:vendor\:uc:package
+user-auth-model: App\Models\User
+
+paths:
+  src: packages/:lc:vendor\:lc:package/src
+  resource: packages/:lc:vendor\:lc:package/src
+
+factory:
+  namespace: :uc:vendor\:uc:package\database\factories
+  path: packages/:lc:vendor\:lc:package/src/database/factories
+
+migration:
+  path: packages/:lc:vendor\:lc:package/src/database/migrations
+  prefix: ''
+
+console:
+  namespace: :uc:vendor\:uc:package\Console
+
+model:
+  namespace: :uc:vendor\:uc:package\Models
+
+provider:
+  namespace: :uc:vendor\:uc:package\Providers
+
+testing:
+  namespace: :uc:vendor\:uc:package\Tests
+
+views:
+  namespace: :uc:vendor\:uc:package\src\views
+
+seeder:
+  namespace: :uc:vendor\:uc:package\database\seeders
+  path: packages/:lc:vendor\:lc:package/src/database/seeders

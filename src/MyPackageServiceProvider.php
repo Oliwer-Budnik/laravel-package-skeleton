@@ -21,12 +21,15 @@ class :uc:packageServiceProvider extends ServiceProvider
 //		    Blade::component(ButtonComponent::class, $packageName.'::button-component');
 //		    Blade::component(Master::class, $packageName.'::master');
 //		    Blade::component(ModalComponent::class, $packageName.'::modal-component');
-				
-         $this->loadTranslationsFrom(__DIR__.'/lang', ':lc:package');
-         $this->loadViewsFrom(__DIR__.'/views', ':lc:package');
-         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
-         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+		$this->publishes([
+			__DIR__.'/resources/scss' => public_path('vendor/courier/scss'),
+		], 'package-styles');
 		
+     $this->loadTranslationsFrom(__DIR__.'/lang', ':lc:package');
+     $this->loadViewsFrom(__DIR__.'/views', ':lc:package');
+     $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+     $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+				 
 		Factory::guessFactoryNamesUsing(function ($modelName) {
 				// Ensure only package models use this resolution
 				if (str_starts_with($modelName, ':uc:vendor\\:uc:package\\Models\\')) {
