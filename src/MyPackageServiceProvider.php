@@ -4,6 +4,7 @@ namespace :uc:vendor\:uc:package;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Pagination\Paginator;
 
 class :uc:packageServiceProvider extends ServiceProvider
 {
